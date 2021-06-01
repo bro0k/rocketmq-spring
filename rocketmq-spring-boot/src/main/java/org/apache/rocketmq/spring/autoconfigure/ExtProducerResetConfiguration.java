@@ -67,7 +67,7 @@ public class ExtProducerResetConfiguration implements ApplicationContextAware, S
     @Override
     public void afterSingletonsInstantiated() {
         Map<String, Object> beans = this.applicationContext.getBeansWithAnnotation(ExtRocketMQTemplateConfiguration.class)
-            .entrySet().stream().filter(entry -> !ScopedProxyUtils.isScopedTarget(entry.getKey()))
+            .entrySet().stream().filter(entry -> !RocketMQUtil.isScopedTarget(entry.getKey()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         beans.forEach(this::registerTemplate);

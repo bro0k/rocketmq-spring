@@ -18,7 +18,6 @@
 package org.apache.rocketmq.spring.autoconfigure;
 
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,7 +25,6 @@ import org.springframework.context.annotation.Configuration;
  * @see RocketMQMessageConverter
  */
 @Configuration
-@ConditionalOnMissingBean(RocketMQMessageConverter.class)
 class MessageConverterConfiguration {
 
     @Bean

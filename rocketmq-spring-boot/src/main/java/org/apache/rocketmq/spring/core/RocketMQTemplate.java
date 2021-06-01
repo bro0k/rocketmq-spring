@@ -39,6 +39,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.converter.SmartMessageConverter;
+import org.springframework.messaging.core.AbstractCompatibleMessageSendingTemplate;
 import org.springframework.messaging.core.AbstractMessageSendingTemplate;
 import org.springframework.messaging.core.MessagePostProcessor;
 import org.springframework.messaging.support.MessageBuilder;
@@ -55,7 +56,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class RocketMQTemplate extends AbstractMessageSendingTemplate<String> implements InitializingBean, DisposableBean {
+public class RocketMQTemplate extends AbstractCompatibleMessageSendingTemplate<String> implements InitializingBean, DisposableBean {
     private static final Logger log = LoggerFactory.getLogger(RocketMQTemplate.class);
 
     private DefaultMQProducer producer;

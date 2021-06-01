@@ -333,4 +333,9 @@ public class RocketMQUtil {
 
         return litePullConsumer;
     }
+
+
+    public static boolean isScopedTarget(String beanName) {
+        return beanName != null && beanName.startsWith("scopedTarget.");
+    }
 }

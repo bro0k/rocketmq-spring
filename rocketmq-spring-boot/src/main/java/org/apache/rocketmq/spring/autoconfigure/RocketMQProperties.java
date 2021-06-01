@@ -18,13 +18,11 @@
 package org.apache.rocketmq.spring.autoconfigure;
 
 import org.apache.rocketmq.common.topic.TopicValidator;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("WeakerAccess")
-@ConfigurationProperties(prefix = "rocketmq")
 public class RocketMQProperties {
 
     /**

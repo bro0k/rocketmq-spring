@@ -73,7 +73,7 @@ public class ExtConsumerResetConfiguration implements ApplicationContextAware, S
     public void afterSingletonsInstantiated() {
         Map<String, Object> beans = this.applicationContext
                 .getBeansWithAnnotation(ExtRocketMQConsumerConfiguration.class)
-                .entrySet().stream().filter(entry -> !ScopedProxyUtils.isScopedTarget(entry.getKey()))
+                .entrySet().stream().filter(entry -> !RocketMQUtil.isScopedTarget(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         beans.forEach(this::registerTemplate);
