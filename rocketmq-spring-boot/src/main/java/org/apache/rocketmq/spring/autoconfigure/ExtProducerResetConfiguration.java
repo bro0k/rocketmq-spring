@@ -17,8 +17,6 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.spring.annotation.ExtRocketMQTemplateConfiguration;
@@ -28,9 +26,8 @@ import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
-import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionValidationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -40,31 +37,31 @@ import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Configuration
-public class ExtProducerResetConfiguration implements ApplicationContextAware, SmartInitializingSingleton {
+public class ExtProducerResetConfiguration implements ApplicationContextAware {
     private final static Logger log = LoggerFactory.getLogger(ExtProducerResetConfiguration.class);
 
     private ConfigurableApplicationContext applicationContext;
 
+    @Autowired
     private StandardEnvironment environment;
 
+    @Autowired
     private RocketMQProperties rocketMQProperties;
 
+    @Autowired
     private RocketMQMessageConverter rocketMQMessageConverter;
-
-    public ExtProducerResetConfiguration(RocketMQMessageConverter rocketMQMessageConverter,
-        StandardEnvironment environment, RocketMQProperties rocketMQProperties) {
-        this.rocketMQMessageConverter = rocketMQMessageConverter;
-        this.environment = environment;
-        this.rocketMQProperties = rocketMQProperties;
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = (ConfigurableApplicationContext) applicationContext;
     }
 
-    @Override
+    @PostConstruct
     public void afterSingletonsInstantiated() {
         Map<String, Object> beans = this.applicationContext.getBeansWithAnnotation(ExtRocketMQTemplateConfiguration.class)
             .entrySet().stream().filter(entry -> !RocketMQUtil.isScopedTarget(entry.getKey()))

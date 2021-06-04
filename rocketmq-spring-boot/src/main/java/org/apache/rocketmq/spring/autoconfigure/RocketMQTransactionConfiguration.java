@@ -32,14 +32,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
-public class RocketMQTransactionConfiguration implements ApplicationContextAware, SmartInitializingSingleton {
+public class RocketMQTransactionConfiguration implements ApplicationContextAware {
 
     private final static Logger log = LoggerFactory.getLogger(RocketMQTransactionConfiguration.class);
 
@@ -49,7 +50,8 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
         this.applicationContext = (ConfigurableApplicationContext) applicationContext;
     }
 
-    @Override public void afterSingletonsInstantiated() {
+    @PostConstruct
+    public void afterSingletonsInstantiated() {
         Map<String, Object> beans = this.applicationContext.getBeansWithAnnotation(RocketMQTransactionListener.class)
             .entrySet().stream().filter(entry -> !RocketMQUtil.isScopedTarget(entry.getKey()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
