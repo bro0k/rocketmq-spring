@@ -25,6 +25,11 @@
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/bro0k/rocketmq-spring</url>
         </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/bro0k/rocketmq-spring</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <parent>
